@@ -4,6 +4,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"rest-api-go/internal/handlers"
+	"rest-api-go/pkg/logging"
 )
 
 // Проверка того, что локальная структура реализует интерфейс
@@ -15,11 +16,14 @@ const (
 )
 
 type handler struct {
+	logger logging.Logger
 }
 
 // NewHandler Конструктор. Создаем в нем локальную структору, но возвращаем интерфейс
-func NewHandler() handlers.Handler {
-	return &handler{}
+func NewHandler(logger logging.Logger) handlers.Handler {
+	return &handler{
+		logger: logger,
+	}
 }
 
 func (h *handler) Register(router *httprouter.Router) {
